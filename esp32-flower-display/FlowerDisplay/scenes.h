@@ -188,7 +188,10 @@ static void sceneWildflowers(Canvas& cv, uint32_t f) {
   for (int i = 0; i < N; i++) {
     const Petal& p = *pals[hr.irange(0, 7)];
     int kind = hr.irange(0, 10);
-    if (kind < 6) cluster(cv, hx[i], hy[i], hr.range(2, 4.2f), hr.range(1, 1.8f), p, i);
+    if (kind < 6) {
+      float rx = hr.range(2, 4.2f), ry = hr.range(1, 1.8f);  // fixed order on every compiler
+      cluster(cv, hx[i], hy[i], rx, ry, p, i);
+    }
     else if (kind < 8) daisy(cv, hx[i], hy[i], hr.range(2, 3.2f), p, YELLOW.col, progress(f, 1) * TAU / 8);
     else {  // spike of buds
       for (int k = 0; k < 4; k++) cv.putf(hx[i], hy[i] - k, k % 2 ? 'o' : '0', k % 2 ? p.col : p.hi);
@@ -254,7 +257,7 @@ static void sceneTulipField(Canvas& cv, uint32_t f) {
   for (int r = H + 1; r < ROWS; r++) {
     float depth = (float)(r - H) / (ROWS - H);  // 0 far .. 1 near
     for (int c = 0; c < COLS; c++) {
-      float s = (c - 40.0f) / (r - H + 1.5f) * 0.9f;
+      float s = (c - 40.0f) / (r - H + 1.5f) * 0.9f + 0.0137f;  // offset avoids exact ties
       int band = (int)floorf(s + 100);
       float frac = s + 100 - band;
       if (frac > 0.8f) { cv.put(c, r, depth > 0.4f ? '|' : '.', GREEN1); continue; }  // green rows
@@ -416,8 +419,9 @@ static void sceneLavender(Canvas& cv, uint32_t f) {
     int len = 1 + row;
     float spacing = 1.5f + row * 0.55f;
     uint16_t mound = mix(RGB(90, 60, 130), RGB(55, 35, 85), row / 7.0f);
-    for (float x0 = fmodf(row * 0.9f, spacing); x0 < COLS + 1; x0 += spacing) {
-      float x = x0 + (hash((uint32_t)(x0 * 10) + row * 1000) % 100) / 100.0f * spacing * 0.4f;
+    float start = fmodf(row * 0.9f, spacing);
+    for (int j = 0; start + j * spacing < COLS + 1; j++) {
+      float x = start + j * spacing + (hash(j + row * 1000) % 100) / 100.0f * spacing * 0.4f;
       float lean = wave(f, 1, x * 0.012f + row * 0.05f) * (0.3f + row * 0.22f);
       if (row >= 3) cv.line(x, y + 1, x, y + 1 + row * 0.5f, GREEN2, '|');
       for (int k = 0; k < len; k++) {

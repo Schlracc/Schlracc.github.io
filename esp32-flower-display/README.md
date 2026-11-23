@@ -37,6 +37,21 @@ Then open `dev/out/index.html`. Click the red button or press **Space** (or the 
 to change pictures, the same as the real button.
 Options: `--scene 3` renders only scene 3, `--scale 3` makes the GIFs bigger.
 
+### Python / Spyder version
+
+`dev/flower_preview.py` is a Python copy of the same drawing code. It needs only numpy and
+matplotlib, which Spyder already includes. Open it in Spyder and press **F5**: all 12 pictures
+appear in the **Plots** pane. The settings at the top of the file control what you see:
+
+```python
+SCENE = "all"      # or 1-12 for just one picture
+FRAME = 30         # animation frame 0-95
+ANIMATE = False    # True = pop-up window that plays it; SPACE / click = next picture
+SAVE_PNG = False   # True = save scene_XX.png files
+```
+
+It matches the C++ version pixel-for-pixel except for a few rounding cells.
+
 ## 2. Wiring (defaults, change in `config.h`)
 
 | Display pin | ESP32 |
