@@ -1,3 +1,5 @@
 dev/out/
 dev/preview
 dev/preview.exe
+__pycache__/
+*.png
