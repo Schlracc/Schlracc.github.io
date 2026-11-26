@@ -755,17 +755,34 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
 @media (min-width:1240px){ .viz{grid-template-columns:minmax(0,5fr) minmax(0,7fr)} }
 .thr-gates .mil{transform:translateX(calc(-100% - 6px))!important}
 
+/* ---------- P-01 radar project write-up ---------- */
+.radar{gap:var(--s-5)}
+.radar .titleblock h3{font-family:var(--font-display);font-size:clamp(26px,3.6vw,36px);font-weight:700;text-transform:uppercase;line-height:1.1;margin:0}
+.rnote{border:1px solid var(--frame);border-left:3px solid var(--accent);background:var(--panel);padding:var(--s-4) var(--s-5);display:flex;flex-direction:column;gap:var(--s-2);max-width:80ch}
+.rnote .eyebrow{color:var(--accent-hi)}
+.rnote p{color:var(--ink-2)}
+.rblock{display:flex;flex-direction:column;gap:var(--s-3)}
+.rblock h3{font-size:22px;text-transform:uppercase;letter-spacing:.02em;padding-bottom:var(--s-1);border-bottom:1px solid var(--rule)}
+.rblock p{max-width:72ch;color:var(--ink-2)}
+.rblock p strong{color:var(--ink);font-weight:600}
+.rblock .quals{max-width:72ch}
+.rblock .quals li{font-size:15px;color:var(--ink-2)}
+.rblock .quals li strong{color:var(--ink);font-weight:600}
+.rblock .specs{max-width:900px}
+.rfine{font-size:13px;color:var(--ink-3);max-width:80ch}
+@media (max-width:560px){ .rnote{padding:var(--s-4)} }
 </style>
 <nav class="crail" id="crail" aria-label="Contact"></nav>
 
 <nav class="srail" id="srail" aria-label="Jump to section">
   <a href="#about" data-sec="about"><span class="code">01</span><span class="lbl">About</span></a>
   <a href="#projects" data-sec="projects"><span class="code">02</span><span class="lbl">Projects</span></a>
-  <a href="#study" data-sec="study"><span class="code">03</span><span class="lbl">Study</span></a>
-  <a href="#sim" data-sec="sim"><span class="code">04</span><span class="lbl">Flight data</span></a>
-  <a href="#viz" data-sec="viz"><span class="code">05</span><span class="lbl">Forces &amp; flow</span></a>
-  <a href="#method" data-sec="method"><span class="code">06</span><span class="lbl">Method</span></a>
-  <a href="#roadmap" data-sec="roadmap"><span class="code">07</span><span class="lbl">Roadmap</span></a>
+  <a href="#radar" data-sec="radar"><span class="code">03</span><span class="lbl">Radar</span></a>
+  <a href="#study" data-sec="study"><span class="code">04</span><span class="lbl">Study</span></a>
+  <a href="#sim" data-sec="sim"><span class="code">05</span><span class="lbl">Flight data</span></a>
+  <a href="#viz" data-sec="viz"><span class="code">06</span><span class="lbl">Forces &amp; flow</span></a>
+  <a href="#method" data-sec="method"><span class="code">07</span><span class="lbl">Method</span></a>
+  <a href="#roadmap" data-sec="roadmap"><span class="code">08</span><span class="lbl">Roadmap</span></a>
 </nav>
 
 <div class="wrap">
@@ -785,6 +802,7 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
     <nav aria-label="Sections">
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
+      <a href="#radar">Radar</a>
       <a href="#f16">F-16 study</a>
     </nav>
   </header>
@@ -807,12 +825,12 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
     <h2 id="projects-title">Projects</h2>
     <ol class="toc">
       <li>
-        <div class="card" aria-label="P-01 Radar, to be announced">
+        <a href="#radar">
           <span class="no">P-01</span>
-          <span class="t"><strong>Radar</strong><span>Details to be announced</span></span>
-          <span class="chip mute">TBA</span>
-          <span class="go" aria-hidden="true"></span>
-        </div>
+          <span class="t"><strong>The Eye: camera-free human tracking</strong><span>mmWave radar · IR rangefinder turret · ESP32 · Python live map</span></span>
+          <span class="chip hot">In development</span>
+          <span class="go" aria-hidden="true">↓</span>
+        </a>
       </li>
       <li>
         <a href="#f16">
@@ -832,6 +850,64 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
       </li>
       <li class="soon"><span class="no">P-04</span><span class="t">Next project to be added</span></li>
     </ol>
+  </section>
+
+  <section class="section radar" id="radar" aria-labelledby="radar-title">
+    <h2 id="radar-title">P-01 · Radar</h2>
+
+    <div class="titleblock frame">
+      <div><span class="k">Title</span><h3>The Eye</h3></div>
+      <div><span class="k">Drawn</span><span class="v">J. Francis</span></div>
+      <div><span class="k">Rev · Date</span><span class="v">V1 · Nov 2026</span></div>
+      <div><span class="k">Status</span><span class="status"><span class="chip hot">In development</span></span></div>
+    </div>
+
+    <aside class="rnote" aria-label="A note on the look">
+      <span class="eyebrow">A note on the look</span>
+      <p>The Eye's live map and controls borrow the look of a fighter jet's radar display and cockpit hardware. That styling is a theme I enjoy building in, not a selling point and not a statement about what the system is for. Underneath it is a general purpose sensor that can be set up almost anywhere you need to know where people are.</p>
+    </aside>
+
+    <div class="rblock">
+      <h3>Project explanation</h3>
+      <p>The Eye tracks a person moving through an ordinary 3D space and shows their position live on a screen: where they are, which way they are heading and how fast. What that information is used for is up to the application, whether that is <strong>documenting a process</strong>, <strong>keeping people clear of a hazard</strong>, or <strong>watching over a space for safety</strong>.</p>
+      <p>It is intended as a larger, more robust option than image-based tracking. Camera tracking is excellent for fine, close-up operations, but it needs light, a clear view and heavy processing. The Eye is aimed at the room-scale job of following people through a space, without any of those requirements.</p>
+      <p>Two kinds of sensor share the work. <strong>24 GHz millimetre-wave radar</strong> modules (HLK-LD2450) watch the whole area and report the range, bearing and speed of up to three people, ten times a second. Once the radar has a target, an <strong>infrared time-of-flight rangefinder</strong> (Benewake TF-Luna) on a small pan and tilt turret is pointed at it and takes over the fine tracking. If the rangefinder loses the person, the radar hands them back. A laptop fuses both sensors into a single track and draws it on a live B-scope style map.</p>
+    </div>
+
+    <div class="rblock">
+      <h3>Applications</h3>
+      <p>Nothing about the Eye is tied to one use. Some of the places it fits:</p>
+      <ul class="quals">
+        <li><strong>Residential:</strong> knowing where people are moving around a home</li>
+        <li><strong>Home security and home defense:</strong> following a person through the house in the dark</li>
+        <li><strong>Security:</strong> monitoring offices, facilities and restricted areas</li>
+        <li><strong>Warehouses:</strong> tracking people around racking, forklifts and other moving equipment</li>
+        <li><strong>Stores:</strong> understanding how people move through a retail floor</li>
+        <li><strong>Laboratories:</strong> documenting procedures and keeping people clear of hazardous equipment</li>
+        <li><strong>And many more:</strong> anywhere a live position of a person is more useful than a picture of them</li>
+      </ul>
+    </div>
+
+    <div class="rblock">
+      <h3>The engineering problem</h3>
+      <p>The Eye uses <strong>zero image-based cameras</strong>. It never captures a picture or video of anyone, and it works the same in <strong>complete darkness</strong> as in daylight.</p>
+      <p>The problem it sets out to solve is doing the jobs people normally give to image-recognition cameras, finding a person, following them, telling one person from another and estimating their height, without using that system at all. Radar and infrared ranging measure distance and motion directly, so the work shifts from recognising shapes in pixels to fusing a few precise measurements into a track that holds up.</p>
+    </div>
+
+    <div class="rblock">
+      <h3>Build stages</h3>
+      <dl class="specs">
+        <div><dt>V1</dt><dd>1 radar, wired to a laptop over USB</dd></div>
+        <div><dt>V2</dt><dd>2 radars in an upside-down T, adds height</dd></div>
+        <div><dt>V3</dt><dd>4 radars for wider coverage</dd></div>
+        <div><dt>Turret</dt><dd>TF-Luna on stepper pan, servo tilt</dd></div>
+        <div><dt>Radar coverage</dt><dd>0.75–6 m, ±60° (spec)</dd></div>
+        <div><dt>Rangefinder</dt><dd>0.2–8 m, ±6 cm (spec)</dd></div>
+        <div><dt>Controller</dt><dd>Seeed XIAO ESP32-S3</dd></div>
+        <div><dt>Software</dt><dd>MicroPython · Python</dd></div>
+      </dl>
+      <p class="rfine">Current status: the tracking software, live map and simulator are working, and radar hardware is in bench testing. The turret is planned but not built yet, and nothing has been field-tested yet, so the ranges above are manufacturer specifications, not measured results.</p>
+    </div>
   </section>
 
   <div class="simzone">
