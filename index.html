@@ -803,8 +803,10 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
 .rlog .rv{font:600 22px/1 var(--font-display);color:var(--accent);min-width:44px}
 .rlog h4{margin:0;font:600 20px/1.15 var(--font-display);text-transform:uppercase;letter-spacing:.02em}
 .rlog p{max-width:76ch;color:var(--ink-2)}
-.rgal{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--s-4)}
-.rgal.four{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.rgal{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--s-4)}
+.rgal.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:900px){ .rgal.four{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.rfig-img.light{background:#f4f5f7}
 .rfig{margin:0;display:flex;flex-direction:column;gap:8px;padding:8px 8px 10px;border:1px solid #060708;border-radius:6px;background:linear-gradient(180deg,#1d2024,#141619);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 6px 16px rgba(0,0,0,.45)}
 .rfig-img{aspect-ratio:4/3;overflow:hidden;border:1px solid #000;border-radius:3px;background:#07080a;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
 .rfig-img img{width:100%;height:100%;display:block}
@@ -961,17 +963,23 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
         <div class="rgal">
           <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/v2-cad.jpg" alt="SOLIDWORKS model of the V2 radar housing" loading="lazy" width="1000" height="750"></div><figcaption><span class="fno">Fig. 2.1</span>V2 head housing in SOLIDWORKS</figcaption></figure>
           <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/v2-build.jpg" alt="Printed V2 head with two radar boards in an upside-down T, wired to a breadboard" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 2.2</span>Printed V2 head with both radars fitted</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/v2-laptop.jpg" alt="Laptop showing the V2 wiring diagram, with radar and turret parts laid out on the table" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 2.3</span>Wiring the V2 build from the diagram</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/v2-desk.jpg" alt="Desk with monitors showing the V2 wiring diagrams and pinout, parts on the desk" loading="lazy" width="1200" height="899"></div><figcaption><span class="fno">Fig. 2.4</span>Working through the V2 wiring diagrams</figcaption></figure>
         </div>
       </article>
 
       <article class="rlog">
-        <header><span class="rv">TUR</span><h4>Rangefinder turret</h4><span class="chip mute">Design</span></header>
-        <p>A TF-Luna infrared rangefinder on a pan and tilt mount laid out like a ship's close-in weapon system: a NEMA 17 stepper driven by an Applied Motion STR2 for pan, and a Feetech FT1117M metal-gear servo for tilt. Parts are in hand and the mount is being modelled. The tracking and handoff logic already runs against a simulated turret.</p>
+        <header><span class="rv">TUR</span><h4>Rangefinder turret</h4><span class="chip hot">Bench build</span></header>
+        <p>A TF-Luna infrared laser rangefinder on a pan and tilt mount laid out like a ship's close-in weapon system: a NEMA 17 stepper driven by an Applied Motion STR2 for pan, and a Feetech FT1117M metal-gear servo for tilt. The mount went from a SOLIDWORKS assembly (Eye V2.5) to printed parts, and the first printed turret is now assembled on the bench next to the V2 head. The tracking and handoff logic already runs against a simulated turret, and hardware testing is next.</p>
         <div class="rgal four">
-          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/turret-cad.jpg" alt="SOLIDWORKS model of the turret pan arm" loading="lazy" width="800" height="600"></div><figcaption><span class="fno">Fig. 3.1</span>Pan arm in SOLIDWORKS</figcaption></figure>
-          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/turret-stepper.jpg" alt="NEMA 17 stepper motor" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.2</span>NEMA 17 pan stepper</figcaption></figure>
-          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/turret-driver.jpg" alt="Applied Motion STR2 step driver" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.3</span>STR2 step driver</figcaption></figure>
-          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/turret-servo.jpg" alt="Feetech FT1117M micro servo" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.4</span>FT1117M tilt servo</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fit light"><img src="img/radar/tur-v25-cad.jpg" alt="SOLIDWORKS assembly of the Eye V2.5 turret: rangefinder in a tilting yoke on a pan base" loading="lazy" width="682" height="1000"></div><figcaption><span class="fno">Fig. 3.1</span>Eye V2.5 turret assembly in SOLIDWORKS</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/tur-first-print.jpg" alt="First 3D printed turret base and bracket" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.2</span>First printed base and pan bracket</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/tur-printed.jpg" alt="Printed turret with the TF-Luna rangefinder and tilt servo fitted" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.3</span>Printed turret with the TF-Luna fitted</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/tur-bench.jpg" alt="Bench setup with the turret beside the V2 radar head and wiring" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.4</span>Turret and V2 head together on the bench</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/turret-stepper.jpg" alt="NEMA 17 stepper motor" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.5</span>NEMA 17 pan stepper</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/turret-driver.jpg" alt="Applied Motion STR2 step driver" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.6</span>STR2 step driver</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/turret-servo.jpg" alt="Feetech FT1117M servo with horn fitted" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.7</span>FT1117M tilt servo with horn</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/tur-a4988.jpg" alt="XIAO ESP32-S3 and A4988 stepper driver on a mini breadboard" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.8</span>XIAO with an A4988 for early stepper tests</figcaption></figure>
         </div>
       </article>
 
@@ -991,7 +999,7 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
         <div><dt>Controller</dt><dd>Seeed XIAO ESP32-S3</dd></div>
         <div><dt>Software</dt><dd>MicroPython · Python</dd></div>
       </dl>
-      <p class="rfine">Current status: the tracking software, live map and simulator are working, and radar hardware is in bench testing. The turret is planned but not built yet, and nothing has been field-tested, so the ranges above are manufacturer specifications, not measured results.</p>
+      <p class="rfine">Current status: the tracking software, live map and simulator are working, and radar hardware is in bench testing. The first turret is printed and assembled for bench testing, and nothing has been field-tested, so the ranges above are manufacturer specifications, not measured results.</p>
     </div>
   </section>
 
