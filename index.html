@@ -767,6 +767,30 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
 .rblock .quals li strong{color:var(--ink);font-weight:600}
 .rblock .specs{max-width:900px}
 .rfine{font-size:13px;color:var(--ink-3);max-width:80ch}
+.rpanel{border:1px solid #060708;border-radius:6px;background:linear-gradient(180deg,#1b1e22,#141619);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 8px 20px rgba(0,0,0,.45);padding:var(--s-5)}
+.rexp{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:var(--s-5) var(--s-6);align-items:start}
+.rexp-text{display:flex;flex-direction:column;gap:var(--s-3)}
+.rexp-text p{color:var(--ink-2)}
+.rexp-text p strong{color:var(--ink);font-weight:600}
+.rchain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.rchain li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:var(--s-3);align-items:start;padding:12px 14px;background:#0c0e10;border:1px solid #2a2e33;border-left:3px solid var(--accent);border-radius:4px;position:relative}
+.rchain li + li::before{content:"";position:absolute;left:31px;top:-11px;width:2px;height:10px;background:var(--accent);opacity:.7}
+.rchain .sn{font:600 20px/1 var(--font-display);color:var(--accent-hi)}
+.rchain b{display:block;font:600 16px/1.2 var(--font-display);text-transform:uppercase;letter-spacing:.06em;color:var(--ink);margin-bottom:3px}
+.rchain li div span{font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.rlook{grid-column:1/-1;border-top:1px solid #2a2e33;padding-top:var(--s-4);display:flex;flex-direction:column;gap:6px}
+.rlook .eyebrow{color:var(--accent-hi)}
+.rlook p{font-size:14px;color:var(--ink-3);max-width:96ch}
+.rapps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-3)}
+.rapps li{display:flex;flex-direction:column;gap:6px;padding:var(--s-4);border:1px solid #060708;border-top:3px solid var(--accent);border-radius:5px;background:linear-gradient(180deg,#1b1e22,#141619);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 6px 14px rgba(0,0,0,.4);transition:transform .15s,box-shadow .15s}
+.rapps li:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 20px rgba(0,0,0,.5)}
+.rapps .ac{font:600 11px/1 var(--font-mono);letter-spacing:.1em;color:var(--accent-hi)}
+.rapps b{font:600 19px/1.15 var(--font-display);text-transform:uppercase;letter-spacing:.03em;color:var(--ink)}
+.rapps li span:last-child{font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.rapps li.more{grid-column:1/-1;background:transparent;box-shadow:none;border:1px dashed #3a3f45;border-top:3px solid var(--accent)}
+@media (max-width:820px){ .rexp{grid-template-columns:minmax(0,1fr)} .rpanel{padding:var(--s-4)} .rapps{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:540px){ .rapps{grid-template-columns:minmax(0,1fr)} }
+@media (prefers-reduced-motion:reduce){ .rapps li{transition:none} .rapps li:hover{transform:none} }
 .rproblem{border:1px solid var(--frame);border-left:4px solid var(--accent);background:var(--panel);padding:var(--s-6);display:flex;flex-direction:column;gap:var(--s-4)}
 .rproblem > .eyebrow{color:var(--accent-hi);font-size:13px}
 .rproblem h3{font-size:clamp(24px,3.2vw,34px);text-transform:uppercase;letter-spacing:.01em;line-height:1.05}
@@ -889,24 +913,32 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
 
     <div class="rblock">
       <h3>Project explanation</h3>
-      <p>The Eye tracks a person moving through an ordinary 3D space and shows their position live on a screen: where they are, which way they are heading and how fast. What that information is used for is up to the application, whether that is <strong>documenting a process</strong>, <strong>keeping people clear of a hazard</strong>, or <strong>watching over a space for safety</strong>.</p>
-      <p>Both sensors report to a laptop, which fuses them into a single track per person and draws it on a live B-scope style map with target selection, speed and lock status.</p>
-      <p>The system uses <strong>zero cameras</strong>. It is intended to fill the role that camera-based tracking traditionally plays in workplaces and similar settings, as an alternative that works in complete darkness and does not capture images of the people it follows.</p>
-      <p class="rfine">Design note: a webcam was considered in the earliest concept stage. It was never built into any working version of the system and was dropped once the project's premise was set.</p>
-      <p><strong>A note on the look:</strong> the live map and controls borrow the look of a fighter jet's radar display and cockpit hardware. That styling is a theme I enjoy building in, not a selling point and not a statement about what the system is for. Underneath it is a general purpose sensor that can be set up almost anywhere you need to know where people are.</p>
+      <div class="rexp rpanel">
+        <div class="rexp-text">
+          <p>The Eye tracks a person moving through an ordinary 3D space and shows their position live on a screen: where they are, which way they are heading and how fast. What that information is used for is up to the application, whether that is <strong>documenting a process</strong>, <strong>keeping people clear of a hazard</strong>, or <strong>watching over a space for safety</strong>.</p>
+          <p>The system uses <strong>zero cameras</strong>. It is intended to fill the role that camera-based tracking traditionally plays in workplaces and similar settings, as an alternative that works in complete darkness and does not capture images of the people it follows.</p>
+          <p class="rfine">Design note: a webcam was considered in the earliest concept stage. It was never built into any working version of the system and was dropped once the project's premise was set.</p>
+        </div>
+        <ol class="rchain" aria-label="Sensor chain">
+          <li><span class="sn">01</span><div><b>Detect</b><span>HLK-LD2450 radar surveys the area and reports range, bearing and speed for up to three people at 10 Hz.</span></div></li>
+          <li><span class="sn">02</span><div><b>Range</b><span>The turret aims the TF-Luna laser at the selected person for a centimetre-level distance. If it slips off, the radar takes back over.</span></div></li>
+          <li><span class="sn">03</span><div><b>Display</b><span>A laptop fuses both into one track per person and draws the live B-scope map.</span></div></li>
+        </ol>
+        <aside class="rlook"><span class="eyebrow">A note on the look</span><p>The live map and controls borrow the look of a fighter jet's radar display and cockpit hardware. That styling is a theme I enjoy building in, not a selling point and not a statement about what the system is for. Underneath it is a general purpose sensor that can be set up almost anywhere you need to know where people are.</p></aside>
+      </div>
     </div>
 
     <div class="rblock">
       <h3>Applications</h3>
       <p>Nothing about the Eye is tied to one use. Some of the places it fits:</p>
-      <ul class="quals">
-        <li><strong>Residential:</strong> knowing where people are moving around a home</li>
-        <li><strong>Home security and home defense:</strong> following a person through the house in the dark</li>
-        <li><strong>Security:</strong> monitoring offices, facilities and restricted areas</li>
-        <li><strong>Warehouses:</strong> tracking people around racking, forklifts and other moving equipment</li>
-        <li><strong>Stores:</strong> understanding how people move through a retail floor</li>
-        <li><strong>Laboratories:</strong> documenting procedures and keeping people clear of hazardous equipment</li>
-        <li><strong>And many more:</strong> anywhere a live position of a person is useful</li>
+      <ul class="rapps">
+        <li><span class="ac">A-01</span><b>Residential</b><span>Knowing where people are moving around a home.</span></li>
+        <li><span class="ac">A-02</span><b>Home security &amp; defense</b><span>Following a person through the house in the dark.</span></li>
+        <li><span class="ac">A-03</span><b>Security</b><span>Monitoring offices, facilities and restricted areas.</span></li>
+        <li><span class="ac">A-04</span><b>Warehouses</b><span>Tracking people around racking, forklifts and other moving equipment.</span></li>
+        <li><span class="ac">A-05</span><b>Stores</b><span>Understanding how people move through a retail floor.</span></li>
+        <li><span class="ac">A-06</span><b>Laboratories</b><span>Documenting procedures and keeping people clear of hazardous equipment.</span></li>
+        <li class="more"><span class="ac">A-XX</span><b>And many more</b><span>Anywhere a live position of a person is useful.</span></li>
       </ul>
     </div>
 
