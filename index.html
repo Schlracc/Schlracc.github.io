@@ -779,12 +779,16 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
 .rlog .rv{font:600 22px/1 var(--font-display);color:var(--accent);min-width:44px}
 .rlog h4{margin:0;font:600 20px/1.15 var(--font-display);text-transform:uppercase;letter-spacing:.02em}
 .rlog p{max-width:76ch;color:var(--ink-2)}
-.rgal{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--s-3)}
-.rgal.four{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
-.rgal figure{margin:0;display:flex;flex-direction:column;gap:6px}
-.rgal img{width:100%;height:260px;object-fit:contain;display:block;border:1px solid var(--rule);border-radius:4px;background:var(--panel-2)}
-.rgal figcaption{font-size:12.5px;color:var(--ink-3)}
-@media (max-width:700px){ .rproblem{padding:var(--s-5) var(--s-4)} .rgal img{height:auto;max-height:420px} }
+.rgal{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--s-4)}
+.rgal.four{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.rfig{margin:0;display:flex;flex-direction:column;gap:8px;padding:8px 8px 10px;border:1px solid #060708;border-radius:6px;background:linear-gradient(180deg,#1d2024,#141619);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 6px 16px rgba(0,0,0,.45)}
+.rfig-img{aspect-ratio:4/3;overflow:hidden;border:1px solid #000;border-radius:3px;background:#07080a;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+.rfig-img img{width:100%;height:100%;display:block}
+.rfig-img.fill img{object-fit:cover}
+.rfig-img.fit img{object-fit:contain;padding:6px}
+.rfig figcaption{display:flex;gap:8px;align-items:baseline;font-size:12.5px;color:var(--ink-2);padding:0 2px}
+.rfig .fno{font:600 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent-hi);white-space:nowrap}
+@media (max-width:700px){ .rproblem{padding:var(--s-5) var(--s-4)} }
 </style>
 <nav class="crail" id="crail" aria-label="Contact"></nav>
 
@@ -877,18 +881,18 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
     </div>
 
     <div class="rproblem frame">
-      <span class="eyebrow">Problem statement</span>
-      <h3>Tracking people without image-based sensing</h3>
-      <p class="rlead">Locating and following people in an indoor space is usually handled by cameras paired with image-recognition software. That approach depends on adequate lighting, an unobstructed line of sight and substantial processing, and it necessarily records images of the people it observes.</p>
-      <p>This project investigates whether the same core functions can be reproduced with no image-based camera in the system. Those functions are detecting a person, following their movement, distinguishing between individuals and estimating height. The Eye relies on millimetre-wave radar and infrared time-of-flight ranging, which measure distance and motion directly. Because neither sensor depends on visible light, the system is intended to operate identically in complete darkness, and it never captures a picture of the people it tracks. The engineering challenge therefore shifts from recognising shapes in pixels to fusing a small number of precise measurements into a reliable track.</p>
-      <p class="rfine">Design note: a webcam was considered in the earliest concept stage. It was never built into any working version of the system and was dropped once the project's premise was set: the Eye should do camera work without a camera.</p>
+      <span class="eyebrow">Overview</span>
+      <h3>Radar detection, laser-ranged tracking</h3>
+      <p class="rlead">The Eye pairs <strong>24 GHz millimetre-wave radar</strong> with an <strong>infrared laser rangefinder</strong> carried on a motorised pan and tilt turret. The radar continuously surveys the area, detecting people and reporting their range, bearing and speed. The turret then aims the laser at a selected person and measures their distance to within a few centimetres, many times a second.</p>
+      <p>The two sensors work as a pair. The radar (HLK-LD2450) gives wide-area awareness of everyone in its field of view, and the laser (Benewake TF-Luna) gives a narrow, precise measurement on one target. When the laser loses its target, the radar hands the track back and the turret reacquires it. A second radar mounted upright adds height, so the system can estimate how tall a person is and aim the laser at their upper body.</p>
     </div>
 
     <div class="rblock">
       <h3>Project explanation</h3>
       <p>The Eye tracks a person moving through an ordinary 3D space and shows their position live on a screen: where they are, which way they are heading and how fast. What that information is used for is up to the application, whether that is <strong>documenting a process</strong>, <strong>keeping people clear of a hazard</strong>, or <strong>watching over a space for safety</strong>.</p>
-      <p>It is intended as a larger, more robust option than image-based tracking. Camera tracking is excellent for fine, close-up operations, but it needs light, a clear view and heavy processing. The Eye is aimed at the room-scale job of following people through a space, without any of those requirements.</p>
-      <p>Two kinds of sensor share the work. <strong>24 GHz millimetre-wave radar</strong> modules (HLK-LD2450) watch the whole area and report the range, bearing and speed of up to three people, ten times a second. Once the radar has a target, an <strong>infrared time-of-flight rangefinder</strong> (Benewake TF-Luna) on a small pan and tilt turret is pointed at it and takes over the fine tracking. If the rangefinder loses the person, the radar hands them back. A laptop fuses both sensors into a single track and draws it on a live B-scope style map.</p>
+      <p>Both sensors report to a laptop, which fuses them into a single track per person and draws it on a live B-scope style map with target selection, speed and lock status.</p>
+      <p>The system uses <strong>zero cameras</strong>. It is intended to fill the role that camera-based tracking traditionally plays in workplaces and similar settings, as an alternative that works in complete darkness and does not capture images of the people it follows.</p>
+      <p class="rfine">Design note: a webcam was considered in the earliest concept stage. It was never built into any working version of the system and was dropped once the project's premise was set.</p>
       <p><strong>A note on the look:</strong> the live map and controls borrow the look of a fighter jet's radar display and cockpit hardware. That styling is a theme I enjoy building in, not a selling point and not a statement about what the system is for. Underneath it is a general purpose sensor that can be set up almost anywhere you need to know where people are.</p>
     </div>
 
@@ -902,7 +906,7 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
         <li><strong>Warehouses:</strong> tracking people around racking, forklifts and other moving equipment</li>
         <li><strong>Stores:</strong> understanding how people move through a retail floor</li>
         <li><strong>Laboratories:</strong> documenting procedures and keeping people clear of hazardous equipment</li>
-        <li><strong>And many more:</strong> anywhere a live position of a person is more useful than a picture of them</li>
+        <li><strong>And many more:</strong> anywhere a live position of a person is useful</li>
       </ul>
     </div>
 
@@ -913,9 +917,9 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
         <header><span class="rv">V1</span><h4>Single radar over USB</h4><span class="chip hot">Bench testing</span></header>
         <p>One LD2450 radar wired to a Seeed XIAO ESP32-S3 on a mini breadboard, streaming over USB to a laptop. The laptop side runs a Kalman-filter tracker, a recorder and a simulator, and draws the live map. The map started as a plain top-down view and has since become a B-scope style display with target selection and lock indicators.</p>
         <div class="rgal">
-          <figure><img src="img/radar/v1-breadboard.jpg" alt="Seeed XIAO ESP32-S3 on a small breadboard" loading="lazy" width="1200" height="904"><figcaption>XIAO ESP32-S3 on the first breadboard</figcaption></figure>
-          <figure><img src="img/radar/map-first.jpg" alt="Early top-down live map with two tracked people and the rangefinder beam" loading="lazy" width="1400" height="840"><figcaption>First live map (simulator data)</figcaption></figure>
-          <figure><img src="img/radar/map-bscope.jpg" alt="Current B-scope live map with a locked target and lock rings" loading="lazy" width="1400" height="788"><figcaption>Current B-scope map with lock rings (simulator data)</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/v1-breadboard.jpg" alt="Seeed XIAO ESP32-S3 on a small breadboard" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 1.1</span>XIAO ESP32-S3 on the first breadboard</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fit"><img src="img/radar/map-first.jpg" alt="Early top-down live map with two tracked people and the rangefinder beam" loading="lazy" width="1400" height="840"></div><figcaption><span class="fno">Fig. 1.2</span>First live map (simulator data)</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fit"><img src="img/radar/map-bscope.jpg" alt="Current B-scope live map with a locked target and lock rings" loading="lazy" width="1400" height="788"></div><figcaption><span class="fno">Fig. 1.3</span>Current B-scope map with lock rings (simulator data)</figcaption></figure>
         </div>
       </article>
 
@@ -923,8 +927,8 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
         <header><span class="rv">V2</span><h4>Upside-down T head for height</h4><span class="chip hot">Bench testing</span></header>
         <p>Two radars in an upside-down T: one lies flat for position across the room, the other stands upright on top of it so it sees height. Matching the two by range gives an estimate of how tall a person is, which the turret uses to aim. The housing was modelled in SOLIDWORKS and 3D printed.</p>
         <div class="rgal">
-          <figure><img src="img/radar/v2-cad.jpg" alt="SOLIDWORKS model of the V2 radar housing" loading="lazy" width="789" height="839"><figcaption>V2 head housing in SOLIDWORKS</figcaption></figure>
-          <figure><img src="img/radar/v2-build.jpg" alt="Printed V2 head with two radar boards in an upside-down T, wired to a breadboard" loading="lazy" width="904" height="1200"><figcaption>Printed V2 head with both radars fitted</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/v2-cad.jpg" alt="SOLIDWORKS model of the V2 radar housing" loading="lazy" width="1000" height="750"></div><figcaption><span class="fno">Fig. 2.1</span>V2 head housing in SOLIDWORKS</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/v2-build.jpg" alt="Printed V2 head with two radar boards in an upside-down T, wired to a breadboard" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 2.2</span>Printed V2 head with both radars fitted</figcaption></figure>
         </div>
       </article>
 
@@ -932,10 +936,10 @@ details[open] > .method-body,details[open] > .cols,details[open] > .sheet-wrap{a
         <header><span class="rv">TUR</span><h4>Rangefinder turret</h4><span class="chip mute">Design</span></header>
         <p>A TF-Luna infrared rangefinder on a pan and tilt mount laid out like a ship's close-in weapon system: a NEMA 17 stepper driven by an Applied Motion STR2 for pan, and a Feetech FT1117M metal-gear servo for tilt. Parts are in hand and the mount is being modelled. The tracking and handoff logic already runs against a simulated turret.</p>
         <div class="rgal four">
-          <figure><img src="img/radar/turret-cad.jpg" alt="SOLIDWORKS model of the turret pan arm" loading="lazy" width="700" height="600"><figcaption>Pan arm in SOLIDWORKS</figcaption></figure>
-          <figure><img src="img/radar/turret-stepper.jpg" alt="NEMA 17 stepper motor" loading="lazy" width="678" height="900"><figcaption>NEMA 17 pan stepper</figcaption></figure>
-          <figure><img src="img/radar/turret-driver.jpg" alt="Applied Motion STR2 step driver" loading="lazy" width="900" height="678"><figcaption>STR2 step driver</figcaption></figure>
-          <figure><img src="img/radar/turret-servo.jpg" alt="Feetech FT1117M micro servo" loading="lazy" width="678" height="900"><figcaption>FT1117M tilt servo</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/turret-cad.jpg" alt="SOLIDWORKS model of the turret pan arm" loading="lazy" width="800" height="600"></div><figcaption><span class="fno">Fig. 3.1</span>Pan arm in SOLIDWORKS</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/turret-stepper.jpg" alt="NEMA 17 stepper motor" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.2</span>NEMA 17 pan stepper</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/turret-driver.jpg" alt="Applied Motion STR2 step driver" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.3</span>STR2 step driver</figcaption></figure>
+          <figure class="rfig"><div class="rfig-img fill"><img src="img/radar/turret-servo.jpg" alt="Feetech FT1117M micro servo" loading="lazy" width="1200" height="900"></div><figcaption><span class="fno">Fig. 3.4</span>FT1117M tilt servo</figcaption></figure>
         </div>
       </article>
 
